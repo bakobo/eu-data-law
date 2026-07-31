@@ -45,37 +45,43 @@ If this repo has no `this.i` yet and warrants one, see [`dev/methodology.md`](..
 §2 and the shipped `this.i.seed`. A trivial repo (pure content/assets/config, where no one will
 later need to know *why*) may skip intent entirely — just delete `this.i.seed`.
 
-## Testing Protocol
+## This is a content repo
 
-This repository appears to have no test suite yet. Before writing feature code
-or fixing bugs, propose an appropriate testing framework for this project type
-and add a single trivially-passing test to confirm the setup works. In the
-same commit, propose to change AGENTS.md to replace this instruction with one
-that instructs agents to follow strict TDD from now on: write failing tests
-that capture happy path and edge cases/unhappy paths for each requirement,
-observe them fail, implement until tests pass, never checkin without proving
-that all tests pass, aim for 100% of all new code, and always leave existing
-code better tested than it was before you touched it.
+The product is the corpus and the registry, not software. `tools/` is a thin harvesting layer over
+[`id-law-kit`](../id-law-kit), which is where the real code and its test suite live — add
+behaviour there, with tests, not here.
 
-## CI and Documentation
+```sh
+python3 -m venv .venv && .venv/bin/pip install -e ../id-law-kit
+.venv/bin/python tools/recon.py      # verify the candidate list against EUR-Lex
+.venv/bin/python tools/harvest.py    # fetch, extract, store, manifest
+```
 
-This repo appears to have no CI workflows yet. Until it does, any time you make
-code changes to the user, propose an appropriate set of GitHub actions (e.g.,
-`.github/workflows/ci.yml`) that builds and runs tests on every push and
-pull request. Propose to remove this instruction from AGENTS.md on the
-same commit.
+There is no CI beyond the template's review gate, and that is deliberate: nothing here builds, and
+a workflow that refetched the corpus on every push would hammer a public EU service to prove
+something the manifest already proves. The kit's CI carries a non-blocking canary job that checks
+the live endpoints still answer.
 
-This repository has no README. As long is this is the case, any time you
-make code changes for the user, propose to add a `README.md` that explains how
-to get from a fresh clone to passing tests, with a clickable CI status
-badge at the top for each active workflow. Propose to remove this
-instruction from AGENTS.md on the same commit.
+## Working rules for this repo
 
-When writing or modifying GitHub Actions workflows, always use the latest
-stable release of each action. Avoid versions pinned to Node.js 16 or
-Node.js 20 (both deprecated by GitHub). In 2026, this meant to prefer Node.js
-24-compatible versions, but the standard may evolve over time. Check the GitHub
-Marketplace for each action's current release.
+1. **Quote-or-drop.** Every claim about EU law needs a citation *and* a verbatim quote retrievable
+   from `corpus/` via `lawcite`. If the quote cannot be reproduced, delete the claim — do not
+   soften it. Models fabricate legal citations fluently; the corpus is what makes a citation
+   checkable rather than trusted.
+2. **Scope lives in `tools/candidates.py`.** That file is the boundary, not a convenience. Adding
+   an instrument means adding an entry there with an `expect_in_title` check, and saying so in the
+   README's Known Gaps if it changes what the repo covers.
+3. **Never harvest a CELEX you have not verified.** Run `tools/recon.py` and read the output. A
+   remembered CELEX number is exactly the kind of plausible fabrication this repo exists to catch,
+   and it is invisible once the text is in the corpus.
+4. **Counts are pointers to read, never findings.** A sweep tells you where to look. `utah-id-law`
+   published a false "zero requirements" claim from a count, and the pattern that produced it
+   matched nothing at all.
+5. **Say which layer a claim rests on.** Enacting terms, recital, implementing decision, and
+   judgment are different things. A recital is not binding in the way an article is, and the
+   corpus keeps them distinct so a finding can say which it used.
+6. **The member-state layer is missing.** The LED is a directive; the GDPR has opening clauses. No
+   claim about what "EU law requires" is complete without transposition, and none of it is here.
 
 <!-- >>> tick stanza >>> (managed by `tick init`) -->
 
