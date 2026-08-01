@@ -7,6 +7,18 @@ non-lawyers doing textual research with substantial AI assistance. It is not leg
 authoritative statement of EU law, and not a substitute for a lawyer. Every claim is tied to a
 citation you can check yourself — check it.
 
+Part of a family of repos that harvest primary legal sources so they can be analysed later — by a
+person or by an AI — without repeating the online research. Shared method and tooling:
+**[`id-law-kit`](https://github.com/bakobo/id-law-kit)**.
+
+| Repo | Regime | Corpus |
+|---|---|---|
+| [`utah-id-law`](https://github.com/bakobo/utah-id-law) | Utah identity-verification law | ✅ |
+| **`eu-data-law`** | GDPR + EU data-locality stack | ✅ |
+| [`eidas-eudi`](https://github.com/bakobo/eidas-eudi) | eIDAS 2, EUDI wallet, ARF | ✅ |
+| [`ccpa`](https://github.com/bakobo/ccpa) | California CCPA/CPRA | ✅ |
+| [`aadhaar`](https://github.com/bakobo/aadhaar) | Aadhaar Act, UIDAI regulations, DPDP Act | ⬜ |
+
 ## What is here
 
 A local, hash-manifested copy of 18 instruments: the EU data-protection core, the data-locality
