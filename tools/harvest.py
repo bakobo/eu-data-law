@@ -32,6 +32,12 @@ CORPUS = ROOT / "corpus"
 # costs under a minute overall.
 PAUSE_SECONDS = 1.0
 
+# Every item on the candidate list is EUR-Lex text in English, and the EU's 24 language versions
+# are each authentic — so this is the only value any row here could carry, and it is a constant
+# rather than a field on Candidate. See `this.i` @ubk6kugi for what has to change the day this
+# corpus stores something that is not authentic EU text.
+TRANSLATION_STATUS = "authoritative"
+
 
 def main(argv=None):
     p = argparse.ArgumentParser(description=__doc__.split("\n")[0])
@@ -72,6 +78,9 @@ def main(argv=None):
                 )
 
             doc = fetcher.fetch_formex(cand.celex)
+            # ~65ak doc.annex_bodies is discarded here, so the four multi-member instruments
+            # (the SCCs and the Japan, Korea and US adequacy decisions) are stored without their
+            # annexes. Measured, with the cost of fixing it, in the tick.
             text = to_text(doc.body)
             written = store.write(cand.celex, text)
         except (EurLexError, FormexError) as e:
@@ -86,6 +95,7 @@ def main(argv=None):
             authority_tier=cand.authority_tier,
             validity=cand.validity,
             validity_note=cand.validity_note,
+            translation_status=TRANSLATION_STATUS,
             version_id=cand.version_id or cand.celex,
             lang="eng",
             source_url=doc.url,
