@@ -23,13 +23,13 @@ person or by an AI — without repeating the online research. Shared method and 
 
 A local, hash-manifested copy of 18 instruments: the EU data-protection core, the data-locality
 regulations, the Chapter V transfer machinery, and the CJEU line that governs how they are read.
-About **511,000 words**, retrieved 2026-07-31.
+About **500,000 words**, retrieved 2026-07-31.
 
 | Layer | Items | Words |
 |---|---|---|
 | **Legislative** — GDPR, LED, EUDPR, 2018/1807, DGA, Data Act | 6 | 200,340 |
 | **Delegated** — SCCs and four adequacy decisions | 5 | 174,795 |
-| **Judicial** — the CJEU line from Digital Rights Ireland to SCHUFA | 7 | 135,603 |
+| **Judicial** — the CJEU line from Digital Rights Ireland to SCHUFA | 7 | 124,603 |
 
 ```
 corpus/*.txt.gz        one file per instrument, gzipped, searchable with rg -z
