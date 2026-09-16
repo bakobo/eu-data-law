@@ -40,6 +40,23 @@ A checkable corpus of EU data-protection and data-locality law = goal:
         after the next amendment lands. Tradeoff: the corpus stores more than one version of some
         instruments, and cite.py must be told which one a finding meant.
 
+    The harvester asserts authoritative translation status for every item it stores = decision:
+      id: ubk6kugi
+      why: >
+        id-law-kit made translation_status a required manifest field with no default, so a
+        harvested item must now say whether it is the text that binds or a rendering of it. The
+        manifest here migrated to authoritative in bulk; harvest.py did not, and refused to store
+        anything until it did. Chose to hardcode authoritative in the harvester rather than add a
+        per-candidate field, because this corpus has one source — EUR-Lex Cellar, in English — and
+        the EU's 24 language versions are each authentic, so there is no candidate on the list for
+        which any other value could be correct. Rejected carrying the field on Candidate
+        unconditionally, which would put a choice in front of every future entry where only one
+        answer exists, and would let a typo file authentic text as a translation. Tradeoff
+        accepted: the day this repo stores something that is *not* authentic EU text — an EDPB
+        guideline in one language, a national transposition in translation, per @g2sb6p — the
+        constant is wrong and the field has to move onto Candidate. That is a visible edit in the
+        file that IS the scope boundary, which is where a scope change belongs.
+
     National transposition is a corpus layer, not a footnote = decision:
       id: g2sb6p
       why: >
